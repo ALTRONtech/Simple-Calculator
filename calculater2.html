@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simple Calculator</title>
+  <style>
+    body {
+      display: flex;
+      margin: 0;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #FFC1FC;
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      width: 40vh;
+      height: 65vh;
+      padding: 20px;
+      background: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 15px;
+      box-shadow: 5px 10px 30px grey;
+    }
+
+    .operators {
+      width: 100%;
+      max-width: 350px;
+      height: 50px;
+      background: #FFCFEA;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    input[type="number"] {
+      padding: 10px;
+      width: 80%;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    input[type="button"] {
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #FFF;
+    }
+
+    .result {
+      margin: 10px 0;
+      font-size: 18px;
+      color: #222;
+      font-weight: bold;
+    }
+
+    .history {
+      width: 100%;
+      max-width: 350px;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    .history h3 {
+      margin-bottom: 10px;
+      color: #444;
+    }
+
+    .history-list {
+      list-style: none;
+      padding: 0;
+      max-height: 150px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: #f9f9f9;
+    }
+
+    .history-list li {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+      color: #333;
+    }
+
+    .history-list li:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>Simple Calculator</h1>
+    <input type="number" id="t1" placeholder="Enter First Number">
+    <input type="number" id="t2" placeholder="Enter Second Number">
+
+    <div class="operators">
+      <input type="button" onclick="calculate('add')" value="Add">
+      <input type="button" onclick="calculate('sub')" value="Sub">
+      <input type="button" onclick="calculate('multi')" value="Multi">
+      <input type="button" onclick="calculate('div')" value="Div">
+    </div>
+
+    <div class="result" id="result"></div>
+
+    <div class="history">
+      <h3>Calculation History</h3>
+      <ul id="history-list" class="history-list"></ul>
+    </div>
+   <h3>Created By ALTRONtech</h3>
+    &copy;2025 All Right Reserved
+  </div>
+
+  <script>
+    function calculate(operation) {
+      const t1 = document.getElementById("t1").value;
+      const t2 = document.getElementById("t2").value;
+      const n1 = parseFloat(t1);
+      const n2 = parseFloat(t2);
+      const resultElement = document.getElementById("result");
+      const historyList = document.getElementById("history-list");
+
+      if (isNaN(n1) || isNaN(n2)) {
+        resultElement.textContent = "Please enter valid numbers.";
+        return;
+      }
+
+      let result;
+      let expression;
+
+      switch (operation) {
+        case "add":
+          result = n1 + n2;
+          expression = `${n1} + ${n2} = ${result}`;
+          break;
+        case "sub":
+          result = n1 - n2;
+          expression = `${n1} - ${n2} = ${result}`;
+          break;
+        case "multi":
+          result = n1 * n2;
+          expression = `${n1} × ${n2} = ${result}`;
+          break;
+        case "div":
+          if (n2 === 0) {
+            resultElement.textContent = "Cannot divide by zero.";
+            return;
+          }
+          result = n1 / n2;
+          expression = `${n1} ÷ ${n2} = ${result.toFixed(6)}`;
+          break;
+        default:
+          resultElement.textContent = "Invalid operation.";
+          return;
+      }
+
+      resultElement.textContent = `Result: ${expression}`;
+
+      // Save to history
+      const listItem = document.createElement("li");
+      listItem.textContent = expression;
+      historyList.appendChild(listItem);
+    }
+  </script>
+</body>
+
+</html>
